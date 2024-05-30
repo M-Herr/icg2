@@ -33,6 +33,10 @@ namespace JClang {
                     // ignore
                 }
                 break;
+                case EnumDecl: {
+                   total_result.combine(scrape_enum_decl_info(item, scope));
+                }
+                break;
                 case TypedefDecl: {
                     total_result.combine(scrape_typedef_info(item, scope));
                 }
@@ -85,6 +89,26 @@ namespace JClang {
         return result;
     }
 
+    ASTInfo scrape_enum_decl_info (json& enum_node, Scope& scope) {
+
+        ASTInfo result;
+
+        EnumInfo* info = new EnumInfo;
+        info->name = scope.make_scoped_name(getNodeName(enum_node));
+
+        // Iterate through contents
+        for (auto item : getNodeInner(enum_node)) {
+            if(getNodeKind(item) == EnumConstantDecl) 
+            {
+                info->fields.push_back(scrape_field_decl_info(item, scope));
+            }    
+        }
+
+        result.add_enum_info(info);
+
+        return result;
+    }
+
 
     ASTInfo scrape_class_template_decl_info (json& class_template_node, Scope& scope) {
         ASTInfo result;
@@ -104,7 +128,6 @@ namespace JClang {
                 }
                 break;
                 default: ;
-                
             }
         }
 

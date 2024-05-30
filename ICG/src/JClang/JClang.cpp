@@ -48,6 +48,14 @@ namespace JClang {
             return NamespaceDecl;
         }
 
+        if(node["kind"] == "EnumDecl") {
+            return EnumDecl;
+        }
+
+        if(node["kind"] == "EnumConstantDecl") {
+            return EnumConstantDecl;
+        }
+        
         if (node["kind"] == "UsingDecl") {
             return UsingDecl;
         }

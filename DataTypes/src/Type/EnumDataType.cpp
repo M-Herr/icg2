@@ -129,6 +129,13 @@ void EnumDataType::addEnumerator( std::string name, int value)  {
     enumDictionary->addEnumerator(name, value);
 }
 
+void EnumDataType::addEnumerator( Enumerator* enumerator)  {
+
+    enum_list.push_back(enumerator);
+
+    enumDictionary->addEnumerator(enumerator->getName(), enumerator->getValue());
+}
+
 std::string EnumDataType::lookupEnumeratorName(int value) const {
     for (auto enumerator : enum_list) {
         if (value == enumerator->getValue()) {

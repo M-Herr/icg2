@@ -1,6 +1,7 @@
 #include "DataTypeInator.hpp"
 #include "Type/ArrayDataType.hpp"
 #include "Type/PointerDataType.hpp"
+#include "Type/EnumDataType.hpp"
 #include "Utils/MutableDeclaration.hpp"
 #include "TypeDictionary.hpp"
 
@@ -90,5 +91,3 @@ void DataTypeInator::addTypeDef (std::string typedefedName, std::string canonica
 
     typeDefDictionary.registerTypedef(lhs.getAbstractDeclarator(), rhs.getAbstractDeclarator());
 }
-
-

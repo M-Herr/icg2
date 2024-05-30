@@ -17,6 +17,8 @@ namespace JClang {
         TemplateArgument,
         UsingDecl,
         TypedefDecl,
+        EnumDecl,
+        EnumConstantDecl,
         Unknown
     };
 

@@ -6,6 +6,7 @@
 
 #include "ICGTemplateEngine/ICGTemplateEngine.hpp"
 #include "IntermediateRepresentation/ClassInfo.hpp"
+#include "IntermediateRepresentation/EnumInfo.hpp"
 
 // Just bundle together all the other things
 
@@ -26,6 +27,13 @@ class ASTInfo {
      * @param class_info fully built ClassInfo object to hold
      */
     void add_class_info(ClassInfo * class_info);
+
+    /**
+     * @brief Add a EnumInfo object
+     * 
+     * @param class_info fully built ClassInfo object to hold
+     */
+    void add_enum_info(EnumInfo* enum_info);
 
     /**
      * @brief Add an STL declaration
@@ -72,4 +80,5 @@ class ASTInfo {
     static const std::string classes_key;
     static const std::string stl_key;
     static const std::string typedef_key;
+    static const std::string enum_key;
 };

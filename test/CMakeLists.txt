@@ -42,6 +42,7 @@ add_icg_integration_test(templates foo.hpp)
 add_icg_integration_test(inheritance foo.hpp)
 add_icg_integration_test(typedef foo.hpp)
 add_icg_integration_test(scoped_typedef foo.hpp)
+add_icg_integration_test(enums Foo.hpp)
 add_icg_integration_test(example Foo.hpp)
 
 

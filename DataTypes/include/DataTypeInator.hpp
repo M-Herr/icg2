@@ -4,6 +4,7 @@
 
 #include "TypeDictionary.hpp"
 #include "TypeDefDictionary.hpp"
+#include "Type/EnumDictionary.hpp"
 #include "Type/DataType.hpp"
 
 
@@ -51,11 +52,16 @@ class DataTypeInator {
          */
         bool validateDictionary();
 
+        EnumDictionary* getEnumDictionary() { return &enumDictionary;}
 
     private:
         TypeDictionary * typeDictionary;
 
         TypeDefDictionary typeDefDictionary;
+
+        EnumDictionary enumDictionary;
+
+        
 };
 
 // ⡹⢌⠳⡘⢦⡙⢆⠳⣌⠳⡘⡜⢢⠝⣢⠓⡬⢓⡌⢳⡘⢦⡙⢆⠳⣌⠳⡘⡜⢢⠝⢢⠓⡬⢓⡌⢳⡘⢦⡙⢆⠳⣌⠳⡘⡜⢢⠝⢢⠓⡬⢓⡌⢳⡘⠦⡙⢆⠳⡌⠳⣌⠳⡘⡜⢢⢃⠳⣌⠳⡘⡜⢢⠝⡰⢃⠮⡑⢎⡜⠦⡙⢆⠳⣌⠳⣌⠳⡘⢦⡙⢆⠳⣌⠳⡘⡜⢢⠝⣢⠓⡬

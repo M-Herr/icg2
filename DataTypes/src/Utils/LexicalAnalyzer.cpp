@@ -16,7 +16,8 @@ struct {
     {"unsigned", Token::Unsigned},
     {"float",    Token::Float},
     {"double",   Token::Double},
-    {"const",    Token::Const}
+    {"const",    Token::Const},
+    {"enum",     Token::Enum},
 };
 
 typedef enum {

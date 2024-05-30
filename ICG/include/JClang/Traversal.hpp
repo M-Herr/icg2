@@ -42,7 +42,15 @@ namespace JClang {
      * @param scope current scope object
      * @return ASTInfo info scraped from this node and child nodes
      */
-    ASTInfo scrape_class_template_decl_info (json& class_template_node, Scope& scope);
+    ASTInfo scrape_class_template_decl_info (json& enum_node, Scope& scope);
+    
+/**
+     * @brief Process this node of the AST as an enum
+     * @param class_template_node node to process
+     * @param scope current scope object
+     * @return ASTInfo info scraped from this node and child nodes
+     */
+    ASTInfo scrape_enum_decl_info (json& enum_node, Scope& scope);
 
     /**
      * @brief Process this node of the AST as a class template specialization

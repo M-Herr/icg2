@@ -108,6 +108,14 @@ public:
      */
     void addEnumerator( std::string val_name, int value);
 
+
+    /**
+     @brief Add a name-value pair to this enum data type.
+     @param enumerator add a literal enumerator
+
+     */
+    void addEnumerator(Enumerator* enumerator);
+
     /**
      * @brief Get the string name that corresponds to the integer for this type
      * 

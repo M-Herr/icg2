@@ -20,6 +20,7 @@ namespace Token {
         Unsigned     ,
         Float        ,
         Double       ,
+        Enum         ,
         Const        ,
         LeftParen    ,
         RightParen   ,

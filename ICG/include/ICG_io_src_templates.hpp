@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 
+// List format string: list_recursableName_tokenName
 std::string io_src = std::string(R"(
 #include <stddef.h>
 #include <stdlib.h>
@@ -10,7 +11,7 @@ std::string io_src = std::string(R"(
 #include "DataTypeInator.hpp"
 #include "Type/SpecifiedCompositeType.hpp"
 #include "Type/SpecifiedSequenceDataType.hpp"
-
+#include "Type/EnumDataType.hpp"
 #include "{{filename}}"
 
 {{list_classes_class_type_decl}}
@@ -30,6 +31,11 @@ void populate_type_dictionary(DataTypeInator * dataTypeInator) {
     // Register typedef statements
     //
     {{list_typedefs_typedef_decl}}
+
+    //
+    //Register Num Types
+    //
+    {{list_enums_enum_decl}}
 
     //
     // Validate!
@@ -87,7 +93,6 @@ class SpecifiedCompositeType<{{ClassName}}> : public CompositeDataType {
 };
 )");
 
-
 std::string derived_field_decl = std::string (R"({"{{FieldName}}", StructMember("{{FieldName}}", "{{FieldType}}", offsetof(Derived, type_to_add::{{FieldName}}))},
 )");
 
@@ -95,6 +100,30 @@ std::string field_decl = std::string(R"({"{{FieldName}}", StructMember("{{FieldN
 )");
 
 std::string stl_decl = std::string(R"(dataTypeInator->addToDictionary("{{STLName}}", new SpecifiedSequenceDataType<{{STLName}}>("{{STLName}}"));
+)");
+
+std::string add_enum_types = std::string(R"(
+    
+    Enumerator * {{EnumName}}_{{FieldName}} = new Enumerator("{{EnumName}}_{{FieldName}}", {{EnumName}}_enum_counter);
+    {{EnumName}}_enum_counter++;
+    {{EnumName}}_enum_vec.push_back({{EnumName}}_{{FieldName}});
+)");
+
+std::string enum_decl = std::string(R"(
+    //Assuming that all enums start at 0 and increase by 1 for every field
+
+    size_t {{EnumName}}_enum_counter = 0;
+    std::vector<Enumerator*> {{EnumName}}_enum_vec;
+
+    {{list_fields_add_enum_types}}
+
+    EnumDataType * {{EnumName}}_EnumDataType = new EnumDataType(dataTypeInator->getEnumDictionary(), "{{EnumName}}", sizeof({{EnumName}}));
+
+    for(size_t i = 0; i < {{EnumName}}_enum_vec.size(); i++) {
+        {{EnumName}}_EnumDataType->addEnumerator({{EnumName}}_enum_vec[i]);
+    }
+
+    dataTypeInator->addToDictionary("{{EnumName}}", {{EnumName}}_EnumDataType);
 )");
 
 std::string typedef_decl = std::string(R"(dataTypeInator->addTypeDef("{{ExistingName}}", "{{AliasName}}");
@@ -119,5 +148,7 @@ std::map<std::string, std::string> template_dictionary {
     {"add_base_members_to_self", add_base_members_to_self},
     {"add_base_members_to_derived", add_base_members_to_derived},
     {"stl_decl", stl_decl},
+    {"enum_decl", enum_decl},
+    {"add_enum_types", add_enum_types},
     {"typedef_decl", typedef_decl}
 };

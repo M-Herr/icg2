@@ -6,12 +6,13 @@
 #include "IntermediateRepresentation/ASTInfo.hpp"
 #include "IntermediateRepresentation/STLDeclInfo.hpp"
 #include "IntermediateRepresentation/TypedefInfo.hpp"
-
+#include "IntermediateRepresentation/EnumInfo.hpp"
 
 // Just bundle together all the other things
 const std::string ASTInfo::classes_key = "classes";
 const std::string ASTInfo::stl_key = "stls";
 const std::string ASTInfo::typedef_key = "typedefs";
+const std::string ASTInfo::enum_key = "enums";
 
 std::string ASTInfo::toString() const {
     std::stringstream ss;
@@ -35,6 +36,13 @@ std::string ASTInfo::toString() const {
         ss << "TypeDef Decls: " << std::endl;
         for (auto typedef_n : items.at(typedef_key)) {
             ss << typedef_n->toString() << std::endl;
+        }
+    }
+
+    if (items.find(enum_key) != items.end()) {
+        ss << "Enum Decls: " << std::endl;
+        for (auto enum_n : items.at(enum_key)) {
+            ss << enum_n->toString() << std::endl;
         }
     }
 
@@ -65,6 +73,10 @@ void ASTInfo::combine (const ASTInfo& other) {
 void ASTInfo::add_class_info(ClassInfo * class_info) {
     add_stl_decl(class_info->getStlMembers());
     items[classes_key].push_back(class_info);
+}
+
+void ASTInfo::add_enum_info(EnumInfo* enum_info) {
+    items[enum_key].push_back(enum_info);
 }
 
 void ASTInfo::add_stl_decl(std::string stl_name) {
